@@ -1,0 +1,5 @@
+_site/
+preview/
+__pycache__/
+.openai/
+index-current.html

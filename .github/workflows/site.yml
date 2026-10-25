@@ -1,0 +1,45 @@
+name: Update releases and deploy site
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify release handling
+        run: python3 -m unittest discover -s scripts -p 'test_*.py'
+      - name: Refresh public releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/update_releases.py --baseline-url https://iamdarkls.github.io/data/releases.json
+      - name: Package static website
+        run: |
+          node --check app.js
+          python3 scripts/build_site.py
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
