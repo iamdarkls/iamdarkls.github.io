@@ -23,11 +23,10 @@
   });
 
   let selectedCategory = 'all';
-  const cards = $$('[data-category]');
   function filterProjects() {
     const search = $('#project-search').value.trim().toLocaleLowerCase('ru');
     let visible = 0;
-    for (const card of cards) {
+    for (const card of $$('[data-category]')) {
       const matches = (selectedCategory === 'all' || card.dataset.category === selectedCategory) && card.textContent.toLocaleLowerCase('ru').includes(search);
       card.hidden = !matches;
       if (matches) visible++;
@@ -144,6 +143,72 @@
   try { showSnapshot(JSON.parse($('#release-snapshot').textContent)); } catch {
     $('#sync-status').textContent = 'Не удалось загрузить версии. Актуальные выпуски доступны по ссылкам на GitHub.';
   }
+  let catalogSnapshot = null;
+  let catalogRefreshing = false;
+  let catalogSignature = null;
+  function validCatalog(data) {
+    return data?.schema === 1 && data.owner === 'iamdarkls' && validDate(data.checked_at) && Array.isArray(data.repositories) && data.repositories.every(repo => {
+      if (!repo || typeof repo.name !== 'string' || !/^[A-Za-z0-9_.-]+$/.test(repo.name)) return false;
+      try {
+        const url = new URL(repo.url);
+        return url.origin === 'https://github.com' && !url.username && !url.password && !url.search && !url.hash && url.pathname === `/iamdarkls/${repo.name}`;
+      } catch { return false; }
+    });
+  }
+  function renderCatalog(data, failed = false) {
+    if (!validCatalog(data)) return;
+    catalogSnapshot = data;
+    const signature = JSON.stringify(data.repositories);
+    if (signature !== catalogSignature) {
+      const fragment = document.createDocumentFragment();
+      for (const repo of data.repositories) {
+        const card = el('article', 'repo-row');
+        card.dataset.category = repo.fork ? 'forks' : 'other';
+        const icon = el('span', 'repo-icon', repo.fork ? '⑂' : '↗');
+        icon.setAttribute('aria-hidden', 'true');
+        const heading = el('div');
+        const badges = [repo.language || 'Язык не указан', repo.fork ? 'форк' : 'проект'];
+        if (repo.archived) badges.push('архив');
+        heading.append(el('h3', '', repo.name), el('span', 'repo-kind', badges.join(' · ')));
+        const description = el('div', 'repo-description');
+        description.append(el('p', '', repo.description || 'Описание пока не добавлено на GitHub.'));
+        if (validDate(repo.pushed_at)) {
+          const updated = el('span', 'repo-updated', 'Последний коммит: ');
+          const time = el('time', '', date(repo.pushed_at));
+          time.dateTime = repo.pushed_at;
+          updated.append(time);
+          description.append(updated);
+        }
+        const github = link('GitHub ↗', repo.url, 'text-link');
+        github.setAttribute('aria-label', `${repo.name} на GitHub`);
+        card.append(icon, heading, description, github);
+        fragment.append(card);
+      }
+      if (!data.repositories.length) fragment.append(el('p', 'catalog-empty', 'Других публичных репозиториев пока нет.'));
+      $('#repository-catalog').replaceChildren(fragment);
+      catalogSignature = signature;
+    }
+    const stale = failed || data.error || Date.now() - Date.parse(data.checked_at) > 3 * 3600000;
+    const status = $('#catalog-status');
+    status.classList.toggle('stale', Boolean(stale));
+    status.textContent = `Каталог GitHub проверен ${timeFormat.format(new Date(data.checked_at))} МСК. ${stale ? 'Показываем последний сохранённый список; обновление задерживается.' : 'Новые публичные репозитории появляются автоматически, примерно раз в час.'}`;
+    filterProjects();
+  }
+  try { renderCatalog(JSON.parse($('#repository-snapshot').textContent)); } catch {
+    $('#catalog-status').textContent = 'Показываем сохранённый каталог. Список репозиториев доступен на GitHub.';
+  }
+  async function refreshCatalog() {
+    if (catalogRefreshing) return;
+    catalogRefreshing = true;
+    try {
+      const response = await fetch('./data/repositories.json', { cache: 'no-cache', signal: AbortSignal.timeout(12000) });
+      if (!response.ok) throw new Error('Catalog unavailable');
+      const data = await response.json();
+      if (!validCatalog(data)) throw new Error('Invalid catalog');
+      renderCatalog(data);
+    } catch { if (catalogSnapshot) renderCatalog(catalogSnapshot, true); }
+    finally { catalogRefreshing = false; }
+  }
   async function refresh() {
     if (refreshing) return;
     refreshing = true;
@@ -156,7 +221,8 @@
     } catch { if (snapshot) showSnapshot(snapshot, true); }
     finally { refreshing = false; }
   }
-  refresh();
-  setInterval(() => { if (!document.hidden) refresh(); }, 5 * 60 * 1000);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  function refreshAll() { refresh(); refreshCatalog(); }
+  refreshAll();
+  setInterval(() => { if (!document.hidden) refreshAll(); }, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshAll(); });
 })();

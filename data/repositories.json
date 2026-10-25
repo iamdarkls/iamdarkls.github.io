@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "owner": "iamdarkls",
+  "attempted_at": "2026-10-25T07:44:24Z",
+  "error": false,
+  "repositories": [
+    {
+      "name": "DARKLS-AI",
+      "url": "https://github.com/iamdarkls/DARKLS-AI",
+      "description": "",
+      "language": "Python",
+      "fork": false,
+      "archived": false,
+      "pushed_at": "2024-09-24T22:38:20Z",
+      "updated_at": "2024-09-24T22:38:23Z"
+    },
+    {
+      "name": "chatbot-telegram",
+      "url": "https://github.com/iamdarkls/chatbot-telegram",
+      "description": "Yet another telegram ChatGPT bot which allows you to setup and run your bot with one simple command.",
+      "language": "TypeScript",
+      "fork": true,
+      "archived": false,
+      "pushed_at": "2023-02-17T02:13:19Z",
+      "updated_at": "2023-02-16T21:10:34Z"
+    },
+    {
+      "name": "materialize",
+      "url": "https://github.com/iamdarkls/materialize",
+      "description": "Materialize, a CSS Framework based on Material Design",
+      "language": "JavaScript",
+      "fork": true,
+      "archived": false,
+      "pushed_at": "2016-03-05T20:58:01Z",
+      "updated_at": "2015-12-26T09:14:42Z"
+    }
+  ],
+  "checked_at": "2026-10-25T07:44:24Z"
+}
