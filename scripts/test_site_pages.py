@@ -57,11 +57,18 @@ class SitePagesTest(unittest.TestCase):
         items=feed_items({'projects':{'ipa':{'latest':old,'history':[old]},'tools':{'latest':new}}})
         self.assertEqual(len(items),2)
         self.assertEqual(items[0]['channel'],'tools')
+    def test_external_vpn_project_is_present_in_both_languages(self):
+        for lang in ('', 'en/'):
+            home=(ROOT/f'_site/{lang}index.html').read_text()
+            self.assertIn('data-project="website"',home)
+            self.assertIn('href="https://darkls-vpn.ru/"',home)
+        self.assertFalse((ROOT/'_site/assets/screenshots/ipa-interface-detail.jpg').exists())
+
     def test_gallery_is_labelled_and_english_app_is_translated(self):
         ipa=(ROOT/'_site/en/projects/ipa-desktop/index.html').read_text()
         vpn=(ROOT/'_site/en/projects/vpn-panel/index.html').read_text()
-        self.assertIn('not a full overview',ipa)
-        self.assertIn('/assets/screenshots/ipa-interface-detail.jpg',ipa)
+        self.assertIn('not published yet',ipa)
+        self.assertNotIn('ipa-interface-detail.jpg',ipa)
         self.assertIn('demonstration data',vpn)
         app=(ROOT/'_site/app.en.js').read_text()
         self.assertNotRegex(app,r'[А-Яа-яЁё]')
