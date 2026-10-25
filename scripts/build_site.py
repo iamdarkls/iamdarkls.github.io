@@ -3,6 +3,7 @@ from pathlib import Path
 import json
 import re
 import shutil
+import hashlib
 from repository_catalog import render_catalog
 from site_pages import generate_pages
 from site_translations import translate_app
@@ -27,4 +28,11 @@ html = re.sub(r'(<div id="repository-catalog">).*?(</div>\s*<p class="catalog-st
 generate_pages(root, out, html, data, catalog)
 (out / 'app.en.js').write_text(translate_app((root / 'app.js').read_text()))
 shutil.copytree(root / 'assets', out / 'assets', dirs_exist_ok=True)
+# Use content-versioned URLs so fresh markup never loads an older cached stylesheet/script.
+versions = {name: hashlib.sha256((out / name).read_bytes()).hexdigest()[:12] for name in ('styles.css', 'app.js', 'app.en.js')}
+for page in out.rglob('index.html'):
+    content = page.read_text()
+    for name, version in versions.items():
+        content = re.sub(r'((?:href|src)=")/?' + re.escape(name) + r'(?:\?v=[a-f0-9]+)?(")', lambda match: match[1] + '/' + name + '?v=' + version + match[2], content)
+    page.write_text(content)
 print('Packaged static website in _site/')

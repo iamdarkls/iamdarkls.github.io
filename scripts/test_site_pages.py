@@ -50,13 +50,23 @@ class SitePagesTest(unittest.TestCase):
             self.assertIn(f'{repo}/issues/new?',en)
             self.assertIn('What+happened',en)
             self.assertIn('type="application/json"',en)
-            self.assertIn('src="/app.en.js"',en)
+            self.assertRegex(en,r'src="/app\.en\.js\?v=[a-f0-9]{12}"')
     def test_feed_sorts_across_channels_and_deduplicates(self):
         def release(tag,date): return {'tag':tag,'published_at':date,'url':f'https://github.com/iamdarkls/IPA-Desktop/releases/tag/{tag}'}
         old=release('v1.0.0','2026-01-01T00:00:00Z');new=release('device-tools-v2.0.0','2026-02-01T00:00:00Z')
         items=feed_items({'projects':{'ipa':{'latest':old,'history':[old]},'tools':{'latest':new}}})
         self.assertEqual(len(items),2)
         self.assertEqual(items[0]['channel'],'tools')
+    def test_asset_urls_match_content_hashes(self):
+        import hashlib
+        for page in (ROOT/'_site').rglob('index.html'):
+            parser=PageParser();parser.feed(page.read_text())
+            for value in parser.urls:
+                url=urlparse(value)
+                if url.path in ('/styles.css','/app.js','/app.en.js'):
+                    digest=hashlib.sha256((ROOT/'_site'/url.path.lstrip('/')).read_bytes()).hexdigest()[:12]
+                    self.assertEqual(url.query,'v='+digest)
+
     def test_external_vpn_project_is_present_in_both_languages(self):
         for lang in ('', 'en/'):
             home=(ROOT/f'_site/{lang}index.html').read_text()
