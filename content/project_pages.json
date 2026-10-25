@@ -1,0 +1,230 @@
+{
+  "ipa": {
+    "slug": "ipa-desktop",
+    "name": "IPA Desktop",
+    "repo": "IPA-Desktop",
+    "platform": "Windows · iPhone",
+    "ru": {
+      "lead": "Приложения для iPhone — от поиска до установки.",
+      "intro": "Ищи приложения, выбирай версии и устанавливай IPA на iPhone в одном приложении для Windows.",
+      "features": [
+        [
+          "Поиск и загрузка",
+          "Поиск по названию и App Store ID, выбор доступных версий и последовательная очередь скачивания."
+        ],
+        [
+          "Наборы приложений",
+          "Сохраняй списки приложений и загружай их под нужным Apple Account без повторного поиска."
+        ],
+        [
+          "Файлы и устройство",
+          "Выбирай локальные IPA, следи за хранилищем и устанавливай приложения на выбранный iPhone."
+        ]
+      ],
+      "requirements": [
+        "Windows 10 1809+ или Windows 11, x64.",
+        "Интернет и Apple Account для скачивания. .NET 10 уже включён в архив.",
+        "Для установки на iPhone: Apple Mobile Device Support, USB и подтверждённое доверие к компьютеру."
+      ],
+      "steps": [
+        "Скачай Windows ZIP и полностью распакуй его в папку с доступом на запись.",
+        "Запусти IPA-Desktop.exe. Дождись подготовки ipatool и device-tools.",
+        "Войди в Apple Account в окне приложения и найди нужные приложения.",
+        "Добавь приложения в очередь, скачай IPA, подключи разблокированный iPhone и подтверди доверие.",
+        "Открой «Файлы и устройство», выбери IPA и запусти установку."
+      ],
+      "faq": [
+        [
+          "Нужно ли отдельно устанавливать .NET?",
+          "Нет. Текущий архив Windows включает runtime. Для связи с iPhone всё равно нужны компоненты Apple."
+        ],
+        [
+          "Можно установить по Wi-Fi?",
+          "Это экспериментальный режим. Сначала выполни сопряжение по USB и включи синхронизацию по Wi-Fi в Apple Devices или iTunes. Компьютер и iPhone должны быть в одной сети."
+        ],
+        [
+          "Есть версии для macOS и Linux?",
+          "Текущий выпуск поддерживает Windows x64. Перенос на macOS и Linux — отдельный этап разработки."
+        ],
+        [
+          "Что делать при Invalid HostID?",
+          "Обнови приложение и device-tools, подключи iPhone по USB, разблокируй и подтверди доверие. Программа пробует восстановить сопряжение и продолжить очередь."
+        ]
+      ],
+      "gallery_note": "Скриншоты текущей версии пока не опубликованы. Возможности и порядок работы описаны ниже и в документации проекта.",
+      "screenshots": []
+    },
+    "en": {
+      "lead": "iPhone apps, from search to installation.",
+      "intro": "Find apps, choose available versions and install IPA files on your iPhone from one Windows application.",
+      "features": [
+        [
+          "Search and download",
+          "Search by name or App Store ID, select available versions and manage a sequential download queue."
+        ],
+        [
+          "App collections",
+          "Save app lists and download them with the Apple Account you need, without searching again."
+        ],
+        [
+          "Files and device",
+          "Select local IPA files, manage storage and install apps on your chosen iPhone."
+        ]
+      ],
+      "requirements": [
+        "Windows 10 1809+ or Windows 11, x64.",
+        "Internet access and an Apple Account for downloads. The .NET 10 runtime is bundled.",
+        "To install on an iPhone: Apple Mobile Device Support, USB and a trusted pairing with the computer."
+      ],
+      "steps": [
+        "Download the Windows ZIP and extract the entire archive to a writable folder.",
+        "Run IPA-Desktop.exe and wait for ipatool and device-tools to be prepared.",
+        "Sign in to your Apple Account in the application and find the apps you need.",
+        "Add apps to the queue, download the IPA files, connect your unlocked iPhone and confirm trust.",
+        "Open Files and device, select the IPA files and start installation."
+      ],
+      "faq": [
+        [
+          "Do I need to install .NET separately?",
+          "No. The current Windows archive includes the runtime. Apple device components are still required to communicate with an iPhone."
+        ],
+        [
+          "Can I install over Wi-Fi?",
+          "Wi-Fi installation is experimental. Pair over USB first and enable Wi-Fi sync in Apple Devices or iTunes. The computer and iPhone must be on the same network."
+        ],
+        [
+          "Are macOS and Linux supported?",
+          "The current release supports Windows x64. Support for macOS and Linux is planned as a separate development stage."
+        ],
+        [
+          "What should I do about Invalid HostID?",
+          "Update the app and device-tools, connect over USB, unlock the iPhone and confirm trust. The application attempts to repair pairing and resume the queue."
+        ]
+      ],
+      "gallery_note": "Screenshots of the current release are not published yet. Features and setup steps are described on this page and in the project documentation.",
+      "screenshots": []
+    }
+  },
+  "vpn": {
+    "slug": "vpn-panel",
+    "name": "DARKLS VPN Panel",
+    "repo": "DARKLS-VPN-Panel",
+    "platform": "ASUS TUF-BE6500 · Xray",
+    "ru": {
+      "lead": "Домашняя сеть. Твои правила.",
+      "intro": "Локальная панель управления Xray: выбирай сайты и устройства для VPN, переключай серверы и проверяй связь.",
+      "features": [
+        [
+          "Маршруты",
+          "Группы сайтов, поиск по сервисам и выбор устройств, трафик которых должен идти через VPN."
+        ],
+        [
+          "Связь и диагностика",
+          "Управление серверами, проверки DNS и HTTPS, история доступности и отдельные настройки автоконтроля."
+        ],
+        [
+          "Обновления и копии",
+          "Обновления панели и ядра Xray, снимки настроек, импорт и экспорт."
+        ]
+      ],
+      "requirements": [
+        "ASUS TUF-BE6500, штатная прошивка с SSH и Linux aarch64.",
+        "Уже настроенный Xray в /jffs/xray, dnsmasq с ipset и iptables с TPROXY.",
+        "Текущая схема рассчитана на сеть 192.168.50.0/24 и USB-автозапуск с флешки WINDOWS_10. Для других схем нужна адаптация."
+      ],
+      "steps": [
+        "Сначала проверь требования и существующую настройку Xray. Панель не включает VPN-подписку или сервер.",
+        "Скачай ZIP панели и следуй инструкциям в репозитории для своей схемы установки. Перед изменениями сохрани настройки.",
+        "После установки открой локальную панель в домашней сети и выбери сайты и устройства.",
+        "Для обновления установленной панели: «Обновления → Панель · GitHub → Проверить обновления», затем установи проверенный выпуск."
+      ],
+      "faq": [
+        [
+          "Это VPN-сервис с подпиской?",
+          "Нет. Это локальная панель для уже настроенного Xray. Доступ к VPN-серверу настраивается отдельно."
+        ],
+        [
+          "Подойдёт другой роутер ASUS?",
+          "Проект рассчитан на TUF-BE6500 и текущую схему сети. Другие модели, подсети и способы автозапуска требуют адаптации и проверки."
+        ],
+        [
+          "Почему выбранный сайт идёт напрямую?",
+          "Проверь, что устройство использует DNS роутера. Защищённый DNS браузера может обходить доменные правила. Уже открытые соединения и DNS-кеш тоже могут сохранять прежний маршрут."
+        ],
+        [
+          "Обновление панели обновит Xray?",
+          "Нет. Панель и ядро Xray обновляются отдельно. Для ядра есть своя вкладка, проверка конфигурации и откат при неудачной замене."
+        ]
+      ],
+      "gallery_note": "Настоящий интерфейс VPN Panel 2.0.0. На снимках используются демонстрационные данные, не настройки домашней сети.",
+      "screenshots": [
+        [
+          "vpn-panel-dark.jpg",
+          "Сайты и сервисы · тёмная тема · демоданные"
+        ],
+        [
+          "vpn-panel-light.jpg",
+          "Сайты и сервисы · светлая тема · демоданные"
+        ]
+      ]
+    },
+    "en": {
+      "lead": "Your home network. Your rules.",
+      "intro": "A local Xray control panel: choose sites and devices for VPN routing, switch servers and check connectivity.",
+      "features": [
+        [
+          "Routing",
+          "Site groups, service search and a choice of devices whose traffic should use the VPN."
+        ],
+        [
+          "Connectivity and diagnostics",
+          "Server management, DNS and HTTPS checks, availability history and separate recovery settings."
+        ],
+        [
+          "Updates and backups",
+          "Independent panel and Xray updates, settings snapshots, import and export."
+        ]
+      ],
+      "requirements": [
+        "ASUS TUF-BE6500, stock firmware with SSH and Linux aarch64.",
+        "An existing Xray installation in /jffs/xray, dnsmasq with ipset and iptables with TPROXY.",
+        "The current setup targets 192.168.50.0/24 and USB startup using a drive named WINDOWS_10. Other setups need adaptation."
+      ],
+      "steps": [
+        "Check the requirements and your existing Xray setup first. A VPN subscription or server is not included.",
+        "Download the panel ZIP and follow the repository instructions for your installation. Back up settings before making changes.",
+        "After installation, open the local panel on your home network and select sites and devices.",
+        "To update an installed panel, open Updates → Panel · GitHub → Check for updates and install the verified release."
+      ],
+      "faq": [
+        [
+          "Is this a VPN subscription service?",
+          "No. This is a local control panel for an existing Xray setup. VPN server access is configured separately."
+        ],
+        [
+          "Does it support other ASUS routers?",
+          "The project targets the TUF-BE6500 and the current network setup. Other models, subnets and startup methods need adaptation and testing."
+        ],
+        [
+          "Why does a selected site connect directly?",
+          "Check that the device uses the router's DNS. Browser encrypted DNS may bypass domain routing. Existing connections and cached DNS records can also retain their previous routes."
+        ],
+        [
+          "Does a panel update also update Xray?",
+          "No. The panel and Xray core are updated separately. Core updates have a dedicated tab, configuration checks and rollback on failure."
+        ]
+      ],
+      "gallery_note": "The actual VPN Panel 2.0.0 interface. Screenshots use demonstration data, not a real home network configuration.",
+      "screenshots": [
+        [
+          "vpn-panel-dark.jpg",
+          "Sites and services · dark theme · demo data"
+        ],
+        [
+          "vpn-panel-light.jpg",
+          "Sites and services · light theme · demo data"
+        ]
+      ]
+    }
+  }
+}
