@@ -1,2 +1,19 @@
-# iamdarkls.github.io
-DARKLS — личная страница проектов: IPA Desktop, DARKLS VPN Panel и эксперименты.
+# DARKLS
+
+Личная страница проектов: https://iamdarkls.github.io/
+
+Статический сайт без сборки, внешних шрифтов, скриптов и зависимостей.
+
+- `index.html` — содержимое и адаптивные стили.
+- `favicon.svg` — иконка DARKLS.
+- `robots.txt`, `sitemap.xml` — индексация.
+
+## Публикация
+
+Репозиторий: `iamdarkls/iamdarkls.github.io` (public).
+В Settings → Pages выбрать **Deploy from a branch**, ветку `main`, папку `/ (root)`.
+В GitHub Actions нет необходимости: сайт публикуется средствами GitHub Pages.
+
+Для изменения проектов редактировать карточки в `index.html`.
+Описания основаны на README проектов на 25 октября 2026 года. Форки отмечены отдельно.
+Иллюстрации в карточках схематические, не скриншоты интерфейсов.
