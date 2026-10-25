@@ -51,8 +51,13 @@
           "Обнови приложение и device-tools, подключи iPhone по USB, разблокируй и подтверди доверие. Программа пробует восстановить сопряжение и продолжить очередь."
         ]
       ],
-      "gallery_note": "Скриншоты текущей версии пока не опубликованы. Возможности и порядок работы описаны ниже и в документации проекта.",
-      "screenshots": []
+      "gallery_note": "Фрагмент раннего интерфейса на фотографии экрана. Это не полный обзор текущей версии приложения.",
+      "screenshots": [
+        [
+          "ipa-interface-detail.jpg",
+          "Фрагмент раннего интерфейса · фото экрана"
+        ]
+      ]
     },
     "en": {
       "lead": "iPhone apps, from search to installation.",
@@ -101,8 +106,13 @@
           "Update the app and device-tools, connect over USB, unlock the iPhone and confirm trust. The application attempts to repair pairing and resume the queue."
         ]
       ],
-      "gallery_note": "Screenshots of the current release are not published yet. Features and setup steps are described on this page and in the project documentation.",
-      "screenshots": []
+      "gallery_note": "A close-up photo of an early interface. It is not a full overview of the current application release.",
+      "screenshots": [
+        [
+          "ipa-interface-detail.jpg",
+          "Early interface detail · photo of a monitor"
+        ]
+      ]
     }
   },
   "vpn": {

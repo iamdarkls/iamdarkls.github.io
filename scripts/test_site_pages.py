@@ -60,7 +60,8 @@ class SitePagesTest(unittest.TestCase):
     def test_gallery_is_labelled_and_english_app_is_translated(self):
         ipa=(ROOT/'_site/en/projects/ipa-desktop/index.html').read_text()
         vpn=(ROOT/'_site/en/projects/vpn-panel/index.html').read_text()
-        self.assertIn('not published yet',ipa)
+        self.assertIn('not a full overview',ipa)
+        self.assertIn('/assets/screenshots/ipa-interface-detail.jpg',ipa)
         self.assertIn('demonstration data',vpn)
         app=(ROOT/'_site/app.en.js').read_text()
         self.assertNotRegex(app,r'[А-Яа-яЁё]')
